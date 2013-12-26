@@ -1,4 +1,6 @@
-require './lib/slanger/version'
+$LOAD_PATH.unshift File.expand_path("../lib", __FILE__)
+
+require 'slanger/version'
 
 Gem::Specification.new do |s|
   s.platform                    = Gem::Platform::RUBY
@@ -34,8 +36,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency    'mocha',            '~> 0.13.2'
 
   s.files                       = Dir['README.md', 'lib/**/*', 'slanger.rb']
-  s.require_path                = '.'
+  s.require_path                = 'lib'
 
-  s.executables << 'slanger'
+  s.executables                 = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
 end
 

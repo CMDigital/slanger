@@ -84,7 +84,7 @@ EM.epoll
 EM.kqueue
 
 EM.run do
-  File.tap { |f| require f.expand_path(f.join(f.dirname(__FILE__),'..', 'slanger.rb')) }
+  File.tap { |f| require f.expand_path(f.join(f.dirname(__FILE__), '..', 'lib', 'slanger.rb')) }
   Slanger::Config.load options
   Slanger::Service.run
 
