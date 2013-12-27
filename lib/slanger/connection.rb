@@ -1,9 +1,10 @@
 module Slanger
   class Connection
-    attr_accessor :socket, :socket_id
+    attr_accessor :socket, :socket_id, :activity_timeout
 
-    def initialize socket, socket_id=nil
+    def initialize socket, socket_id=nil, activity_timeout=nil
       @socket, @socket_id = socket, socket_id
+      @activity_timeout = activity_timeout || default_activity_timeout
     end
 
     def send_message m
@@ -22,7 +23,14 @@ module Slanger
 
     def establish
       @socket_id = SecureRandom.uuid
-      send_payload nil, 'pusher:connection_established', { socket_id: @socket_id }
+      send_payload nil, 'pusher:connection_established', {
+        socket_id:        @socket_id,
+        activity_timeout: activity_timeout,
+      }
+    end
+
+    def default_activity_timeout
+      120 # seconds
     end
 
     private
